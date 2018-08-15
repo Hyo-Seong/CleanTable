@@ -7,20 +7,6 @@ namespace CleanTable.Core
     {
         public bool IsEmpty()
         {
-            ProcessStartInfo cmd = new ProcessStartInfo();
-            Process process = new Process();
-            cmd.FileName = @"cmd";
-            cmd.WindowStyle = ProcessWindowStyle.Hidden;             // cmd창이 숨겨지도록 하기
-            cmd.CreateNoWindow = true;                               // cmd창을 띄우지 안도록 하기
-
-            cmd.UseShellExecute = false;
-            cmd.RedirectStandardOutput = true;        // cmd창에서 데이터를 가져오기
-            cmd.RedirectStandardInput = true;          // cmd창으로 데이터 보내기
-            cmd.RedirectStandardError = true;          // cmd창에서 오류 내용 가져오기
-
-            process.EnableRaisingEvents = false;
-            process.StartInfo = cmd;
-            process.Start();
             var psinfo = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = @"cmd",
@@ -36,7 +22,7 @@ namespace CleanTable.Core
             p.StandardInput.Close();
 
             string result = p.StandardOutput.ReadToEnd();
-
+            Debug.WriteLine(result);
             string[] temp = result.Split('\n');
             string category = "";
             int accuracy = 0;
