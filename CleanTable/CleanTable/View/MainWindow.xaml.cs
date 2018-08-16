@@ -50,34 +50,36 @@ namespace CleanTable
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            setImage();        
+        }
+
+        private void setImage()
+        {
             frame = new Mat();
 
             capture.Read(frame);
             frame = frame.Flip(FlipMode.Y); // 좌우 반전
 
-            // var process = Process.GetCurrentProcess();
-            // string savePath = process.MainModule.FileName + "\\SaveImage";
+            WriteableBitmapConverter.ToWriteableBitmap(frame, wb);
+            image.Source = wb;
+            ImageSave(frame);
+        }
 
+        private void ImageSave(Mat frame)
+        {
             string savePath = Directory.GetCurrentDirectory() + "\\SaveImage";
+            DateTime now = new DateTime();
+            now = DateTime.Now;
+
 
             if (!System.IO.Directory.Exists(savePath))
             {
                 System.IO.Directory.CreateDirectory(savePath);
             }
 
-            WriteableBitmapConverter.ToWriteableBitmap(frame, wb);
-
-
-            DateTime now = new DateTime();
-            now = DateTime.Now;
-            
-
-            string imagePath = savePath + "\\" + now.ToString("yyyyMMdd_HHmmss") + ".jpg"; 
+            string imagePath = savePath + "\\" + now.ToString("yyyyMMdd_HHmmss") + ".jpg";
 
             OpenCvSharp.Cv2.ImWrite(imagePath, frame); // 경로 지정 후 jpg 형식으로 저장(파일명은 저장일 + 저장 시간)
-
-            image.Source = wb;
-
 
         }
     }
