@@ -1,6 +1,8 @@
 ﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -51,9 +53,32 @@ namespace CleanTable
             frame = new Mat();
 
             capture.Read(frame);
+            frame = frame.Flip(FlipMode.Y); // 좌우 반전
+
+            // var process = Process.GetCurrentProcess();
+            // string savePath = process.MainModule.FileName + "\\SaveImage";
+
+            string savePath = Directory.GetCurrentDirectory() + "\\SaveImage";
+
+            if (!System.IO.Directory.Exists(savePath))
+            {
+                System.IO.Directory.CreateDirectory(savePath);
+            }
+
             WriteableBitmapConverter.ToWriteableBitmap(frame, wb);
 
+
+            DateTime now = new DateTime();
+            now = DateTime.Now;
+            
+
+            string imagePath = savePath + "\\" + now.ToString("yyyyMMdd_HHmmss") + ".jpg"; 
+
+            OpenCvSharp.Cv2.ImWrite(imagePath, frame); // 경로 지정 후 jpg 형식으로 저장(파일명은 저장일 + 저장 시간)
+
             image.Source = wb;
+
+
         }
     }
 }
