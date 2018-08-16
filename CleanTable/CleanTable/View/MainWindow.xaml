@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:CleanTable"
         xmlns:cam="clr-namespace:WebcamControl;assembly=WebcamControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized"
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
-        <cam:Webcam x:Name="WebcamViewer" Margin="10"
+        <!--<cam:Webcam x:Name="WebcamViewer" Margin="10"
 
                     FrameRate="30"
                     
@@ -19,5 +20,14 @@
                     VideoDevice="{Binding SelectedItem, ElementName=VidDevices}"
 
                     AudioDevice="{Binding SelectedItem, ElementName=AudDevices}"/>
+-->
+        <StackPanel>
+        <Image x:Name="image" Height="200" Margin="16, 10, 6, 0"
+               VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
+        <Button x:Name="button" Content="Button" Margin="10"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Click="button_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
