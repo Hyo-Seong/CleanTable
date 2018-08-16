@@ -114,10 +114,12 @@ namespace CleanTable
                 System.IO.Directory.CreateDirectory(savePath);
             }
 
-            string imagePath = savePath + "\\" + now.ToString("yyyyMMdd_HHmmss") + ".jpg";
+            string imagePath = savePath + "\\" + now.ToString("yyyyMMdd_HHmmssfff");
             //filename = imagePath;
             string strResult =  WebcamViewer.TakeSnapshot(imagePath);
-            CheckDish(imagePath);
+            CheckDish(strResult);
+
+            image.Source = new BitmapImage(new Uri(strResult, UriKind.Absolute));
 
             //frame = Capture();
             //string filename = string.Empty;
