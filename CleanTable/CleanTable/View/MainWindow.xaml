@@ -6,28 +6,70 @@
         xmlns:local="clr-namespace:CleanTable"
         xmlns:cam="clr-namespace:WebcamControl;assembly=WebcamControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized"
+        Title="MainWindow" Width="1920" Height="1080" WindowState="Maximized"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
-        <!--<cam:Webcam x:Name="WebcamViewer" Margin="10"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <ComboBox x:Name="VidDevices" Grid.Column="1" Margin="10,0,0,0"
+                      Width="210" Height="24"
+                      ItemsSource="{Binding VideoDevices}"
+                      DisplayMemberPath="Name"
+                      SelectedIndex="0"/>
+            </Grid>
+            <cam:Webcam x:Name="WebcamViewer" Grid.Row="1" Margin="10"
+                        FrameRate="30"
+                        ImageDirectory="C:\WebcamSnapshots"
+                        VideoDirectory="C:\VideoClips"
+                        VideoDevice="{Binding SelectedItem, ElementName=VidDevices}"/>
+            <!--AudioDevice="{Binding SelectedItem, ElementName=AudDevices}"-->
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Button x:Name="btnCapture" Content="인식" Margin="24"
+                        FontSize="72" FontWeight="Bold"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        Click="btnCapture_Click"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <ListView x:Name="lvImage" ItemsSource="{Binding Image}"
+                      SelectionMode="Single" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Title}"
+                                        Header="날짜"
+                                        Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Accuracy}"
+                                        Header="잔반률"
+                                        Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
 
-                    FrameRate="30"
-                    
-                    ImageDirectory="C:\WebcamSnapshots"
+            <Image x:Name="image" />
+        </Grid>
 
-                    VideoDirectory="C:\VideoClips"
 
-                    VideoDevice="{Binding SelectedItem, ElementName=VidDevices}"
+        
 
-                    AudioDevice="{Binding SelectedItem, ElementName=AudDevices}"/>
--->
-        <StackPanel>
-        <Image x:Name="image" Height="200" Margin="16, 10, 6, 0"
-               VerticalAlignment="Top" HorizontalAlignment="Center"/>
 
-        <Button x:Name="button" Content="Button" Margin="10"
-                HorizontalAlignment="Center" VerticalAlignment="Center"
-                Click="button_Click"/>
-        </StackPanel>
+
+
+
     </Grid>
 </Window>

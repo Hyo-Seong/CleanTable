@@ -1,0 +1,371 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+        "EncoderUtil"
+    </assembly>
+  <members>
+    <member name="F:Microsoft.Expression.Encoder.Live.FileSourcePlaybackMode.Jump">
+      <summary>
+Jump to another file source.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.FileSourcePlaybackMode.Loop">
+      <summary>
+Loop the file source back to the beginning when it comes to the end.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.FileSourcePlaybackMode.Hold">
+      <summary>
+Hold on the last frame of this file source.
+</summary>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.UnableToCreateThumbnailException.#ctor(System.String,System.Exception)">
+      <summary>
+Initializes a new instance of the UnableToCreateThumbnailException from an exception.
+</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The exception that is the cause of the current exception.</param>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.UnableToCreateThumbnailException.#ctor(System.String)">
+      <summary>
+Initializes a new instance of the UnableToCreateThumbnailException from an exception.
+</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.UnableToCreateThumbnailException.#ctor(System.Exception)">
+      <summary>
+Initializes a new instance of the UnableToCreateThumbnailException from an exception.
+</summary>
+      <param name="ex">The exception that is the cause of the current exception.</param>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.UnableToCreateThumbnailException.#ctor">
+      <summary>
+Initializes a new instance of the UnableToCreateThumbnailException
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.UnableToCreateThumbnailException">
+      <summary>
+Exception that is thrown when an error occurs generating a thumbnail.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Live.ConfigurationDialog">
+      <summary>
+Public enum of the different configuration types that are supported.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.TVAudioDialog">
+      <summary>
+TV Tuner audio dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.AudioCapturePinDialog">
+      <summary>
+Audio capture pin dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.AudioCaptureDialog">
+      <summary>
+Audio capture dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VideoPreviewPinDialog">
+      <summary>
+Video preview pin dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VideoCapturePinDialog">
+      <summary>
+Video capture pin dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.TVTunerDialog">
+      <summary>
+TV Tuner dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VideoSecondCrossbarDialog">
+      <summary>
+Video crossbar alternate dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VideoCrossbarDialog">
+      <summary>
+Video crossbar dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VideoCaptureDialog">
+      <summary>
+Video capture dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VfwDisplayDialog">
+      <summary>
+Video display dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VfwSourceDialog">
+      <summary>
+Video source dialog box.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.ConfigurationDialog.VfwFormatDialog">
+      <summary>
+Video format dialog box.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Live.TransportMode">
+      <summary>
+Public enum of the different transport modes a DV or VCR device supports.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.StepBackward">
+      <summary>
+Single Step Backward
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.StepForward">
+      <summary>
+Single Step Forward
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.RecordFreeze">
+      <summary>
+Pause Recording
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.Record">
+      <summary>
+Record
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.Rewind">
+      <summary>
+Rewind
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.FastForward">
+      <summary>
+Fast Forward
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.Pause">
+      <summary>
+Freeze
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.Stop">
+      <summary>
+Stop
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Live.TransportMode.Play">
+      <summary>
+Play
+</summary>
+    </member>
+    <member name="P:Microsoft.Expression.Encoder.IndexProgressEventArgs.Cancel">
+      <summary>
+Gets or sets a value indicating whether the indexing operation should be canceled.
+</summary>
+    </member>
+    <member name="P:Microsoft.Expression.Encoder.IndexProgressEventArgs.Progress">
+      <summary>
+Gets the progress of the indexing operation.  Goes from 0-1
+</summary>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.IndexProgressEventArgs.#ctor(System.Double)">
+      <summary>
+Initializes a new instance of the IndexProgressEventArgs class.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.IndexProgressEventArgs">
+      <summary>
+Class that is used to show progress when a file is being indexed.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode">
+      <summary>
+Used to specify the stream compatibility mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode.AppleIphone">
+      <summary>
+Apple iPhone MP4 stream compatibility mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode.AppleQuickTime">
+      <summary>
+Apple QuickTime (7.1) MP4 stream compatibility mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode.AppleIpod">
+      <summary>
+Apple iPod MP4 stream compatibility mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode.SonyPSP">
+      <summary>
+Sony Playstation Portable MP4 stream compatibility mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.StreamCompatibilityMode.Standard">
+      <summary>
+Standard MP4 stream compatibility mode.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.MultiReferenceMotionSearchMode">
+      <summary>
+The values for multi reference motion search mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.MultiReferenceMotionSearchMode.Quality">
+      <summary>
+Favor quality over speed.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.MultiReferenceMotionSearchMode.Balanced">
+      <summary>
+Balance speed and quality.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.MultiReferenceMotionSearchMode.Speed">
+      <summary>
+Speed 
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.SubBlockMotionSearchMode">
+      <summary>
+The values for sub block motion search mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubBlockMotionSearchMode.Quality">
+      <summary>
+Favor quality over speed.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubBlockMotionSearchMode.Balanced">
+      <summary>
+Balance speed and quality.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubBlockMotionSearchMode.Speed">
+      <summary>
+Favor speed over quality. 
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.RDOptimizationMode">
+      <summary>
+The values for RD optimization mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.RDOptimizationMode.Quality">
+      <summary>
+Favor quality over speed.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.RDOptimizationMode.Speed">
+      <summary>
+Favor speed over quality.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.RDOptimizationMode.Off">
+      <summary>
+Off
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.SubPixelMode">
+      <summary>
+The values for subpixel search mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubPixelMode.Quarter">
+      <summary>
+Search in quarter pixels.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubPixelMode.Half">
+      <summary>
+Search in half pixels.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.SubPixelMode.Full">
+      <summary>
+Search only in full pixels.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.EntropyMode">
+      <summary>
+The values for entropy mode.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.EntropyMode.Cabac">
+      <summary>
+Use CABAC for entropy coding.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.EntropyMode.Cavlc">
+      <summary>
+Use CAVLC for entropy coding.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.Profiles.MEPartitionLevel">
+      <summary>
+The values for ME Partition Level.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.MEPartitionLevel.EightByEight">
+      <summary>
+Analyze 16x16, 16x8, 8x16 and 8x8 partitions.
+</summary>
+    </member>
+    <member name="F:Microsoft.Expression.Encoder.Profiles.MEPartitionLevel.SixteenBySixteen">
+      <summary>
+Only analyze a 16x16 partition.
+</summary>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.MetadataNames">
+      <summary>
+Class that holds the predefined metadata names.
+</summary>
+    </member>
+    <member name="P:Microsoft.Expression.Encoder.MetadataName.WMAttribute">
+      <summary>
+Gets the name of the Windows Media attribute for this metadata type.
+</summary>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.MetadataName.GetHashCode">
+      <summary>
+The hash function for MetadataName.
+</summary>
+      <returns>A hash code for the current MetadataName.</returns>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.MetadataName.Equals(System.Object)">
+      <summary>
+Determines whether the specified object is equal to the current MetadataName.
+</summary>
+      <param name="obj">The object to compare with the current MetadataName.</param>
+      <returns>"True" if the specified object is equal to the current MetadataName; otherwise, "False".</returns>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.MetadataName.op_Inequality(Microsoft.Expression.Encoder.MetadataName,Microsoft.Expression.Encoder.MetadataName)">
+      <summary>
+Operator override to determine whether two MetadataNames are not equal.
+</summary>
+      <param name="item1">The first MetadataName to compare.</param>
+      <param name="item2">The second MetadataName to compare.</param>
+      <returns>"True" if the first MetadataName is equal to the second MetadataName; otherwise, "False".</returns>
+    </member>
+    <member name="M:Microsoft.Expression.Encoder.MetadataName.op_Equality(Microsoft.Expression.Encoder.MetadataName,Microsoft.Expression.Encoder.MetadataName)">
+      <summary>
+Operator override to determine whether two MetadataNames are equal.
+</summary>
+      <param name="item1">The first MetadataName to compare.</param>
+      <param name="item2">The second MetadataName to compare.</param>
+      <returns>"True" if the first MetadataName is equal to the second MetadataName; otherwise, "False".</returns>
+    </member>
+    <member name="T:Microsoft.Expression.Encoder.MetadataName">
+      <summary>
+Stores information about a Metadata type.
+</summary>
+    </member>
+  </members>
+</doc>
