@@ -16,5 +16,13 @@ namespace CleanTable.Common
             path = Directory.GetCurrentDirectory();
             return path;
         }
+
+        public static string GetSnapshotDir()
+        {
+            string now = "\\";
+            now += DateTime.Now.ToString("yyyyMMdd");
+
+            return now;
+        }
     }
 }

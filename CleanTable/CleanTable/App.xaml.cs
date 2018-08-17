@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanTable.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,6 @@ namespace CleanTable
     /// </summary>
     public partial class App : Application
     {
+        public static SnapShotViewModel snapShotViewModel = new SnapShotViewModel();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanTable.Model;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -6,8 +7,10 @@ namespace CleanTable.Core
 {
     public class CheckFood
     {
-        public async Task<bool> IsDishEmptyAsync(string fileName)
+        public async Task<SnapShot> IsDishEmptyAsync(string fileName)
         {
+            SnapShot snapShot = new SnapShot();
+
             bool bEmpty = await Task.Run(() =>
             {
                 var psInfo = new ProcessStartInfo
@@ -31,15 +34,21 @@ namespace CleanTable.Core
                 string category = "";
                 int accuracy = 0;
                 float loadingTime = 0f;
+
                 try
                 {
                     category = temp[5].Trim();
                     accuracy = Int32.Parse(temp[6]);
                     loadingTime = float.Parse(temp[7]);
+
+                    snapShot.Category = category;
+                    snapShot.Accuracy = accuracy;
+                    snapShot.LoadingTime = loadingTime;
                 }
                 catch (Exception exception)
                 {
                     Debug.WriteLine(exception.Message);
+                    snapShot.Message = exception.Message;
                     return false;
                 }
                 if (accuracy >= 80) // 정확도80% 이상이면 신뢰할 수 있는 데이터
@@ -63,7 +72,7 @@ namespace CleanTable.Core
                 return false;
             });
 
-            return bEmpty;
+            return snapShot;
         }
     }
 }
