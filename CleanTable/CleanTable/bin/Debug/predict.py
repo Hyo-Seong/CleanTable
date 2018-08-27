@@ -17,7 +17,7 @@ if __name__ == '__main__':
   start_time = time.time() 
   file_path = sys.argv[1]
   project_id = 'no-voice'
-  model_id = 'ICN6380204732493198083'
+  model_id = 'ICN5746702720367315672'
   
   with open(file_path, 'rb') as ff:
     content = ff.read()

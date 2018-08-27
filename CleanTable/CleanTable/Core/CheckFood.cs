@@ -54,14 +54,14 @@ namespace CleanTable.Core
                 if (accuracy >= 80) // 정확도80% 이상이면 신뢰할 수 있는 데이터
                 {
                     Debug.WriteLine("[result]  소요시간 : " + loadingTime);
-                    if (category.Equals("cat"))
+                    if (category.Equals("filled"))
                     {
-                        Debug.WriteLine("This is Cat");
+                        Debug.WriteLine("filled");
                         return true;
                     }
                     else
                     {
-                        Debug.WriteLine("This is Dog");
+                        Debug.WriteLine("empty");
                         return false;
                     }
                 }

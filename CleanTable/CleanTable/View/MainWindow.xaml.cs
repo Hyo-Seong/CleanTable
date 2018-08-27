@@ -39,12 +39,14 @@ namespace CleanTable
 
             try
             {
+                #region 주석
                 //capture = VideoCapture.FromCamera(CaptureDevice.Any, 0);
                 //capture.FrameWidth = 640;
                 //capture.FrameHeight = 480;
                 //capture.Open(0);
                 //wb = new WriteableBitmap(capture.FrameWidth, capture.FrameHeight, 96, 96, PixelFormats.Bgr24, null);
                 //image.Source = wb;
+                #endregion
 
                 InitWebCam();
             }
