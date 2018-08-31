@@ -248,7 +248,6 @@ namespace CleanTable
 
         private void EnableRecog(bool isRecog)
         {
-            return; //only test
             if(isRecog)
             {
                 btnCapture.Content = "인식중...";
