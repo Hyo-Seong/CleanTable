@@ -4,64 +4,77 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleanTable"
-        xmlns:cam="clr-namespace:WebcamControl;assembly=WebcamControl"
         mc:Ignorable="d"
-        Title="클린테이블" Width="1920" Height="1080" WindowState="Maximized"
+        Title="클린테이블" WindowState="Maximized"
         Loaded="Window_Loaded" Closing="Window_Closing">
-    <Grid>
+    
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
         
-        <Grid Grid.Column="0" Margin="12,6,12,0">
+        <Grid Grid.Column="0" Margin="12,6,12,12">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
-            <cam:Webcam x:Name="WebcamViewer" Grid.Row="0" Margin="12,6,12,0"
+            <!--<cam:Webcam x:Name="WebcamViewer" Grid.Row="0" Margin="12,6,12,0"
                         FrameRate="30"
                         ImageDirectory="C:\WebcamSnapshots"
                         VideoDirectory="C:\VideoClips"
-                        VideoDevice="{Binding SelectedItem, ElementName=VidDevices}"/>
-            <Grid Grid.Row="0" Margin="12" HorizontalAlignment="Left" VerticalAlignment="top">
+                        VideoDevice="{Binding SelectedItem, ElementName=VidDevices}"/>-->
+            <Grid Grid.Row="0" Margin="12,6,12,0">
+                <Border Background="Black" CornerRadius="10"></Border>
+                <Image x:Name="previewImageCtrl" Margin="6,60,6,6" Stretch="UniformToFill"/>
+                <Grid>
+                    <TextBlock Text="PREVIEW" Margin="12" Foreground="White" 
+                               FontSize="24" FontWeight="Bold"/>
+                </Grid>
+                <StackPanel Margin="0,14,14,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <TextBlock Foreground="WhiteSmoke" FontSize="20">
+                        <Run Text="대구소프트웨어고등학교" FontWeight="Bold"/>
+                        <Run Text="클린테이블" FontWeight="Bold" Foreground="Lime"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+            <!--<Grid Grid.Row="0" Margin="12" HorizontalAlignment="Left" VerticalAlignment="top">
                 <Border Background="Goldenrod"/>
                 <TextBlock Text="PREVIEW" FontSize="100" Foreground="White"/>
-            </Grid>
-            <!--AudioDevice="{Binding SelectedItem, ElementName=AudDevices}"-->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="카메라 선택" VerticalAlignment="Center"/>
-                <ComboBox x:Name="VidDevices" Grid.Column="1" Margin="10,0,0,0"
-                      Width="210" Height="24"
-                      ItemsSource="{Binding VideoDevices}"
-                      DisplayMemberPath="Name"
-                      SelectedIndex="0"/>
-            </StackPanel>
-            <Grid Grid.Row="2" Grid.Column="0">
-                <Button x:Name="btnCapture" Content="인식" Margin="12,12,12,24"
+            </Grid>-->
+            
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".5*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Assets/cleantable.jpg" Stretch="Uniform" Margin="70"/>
+                <Button x:Name="btnCapture" Grid.Column="1" Content="인식" Margin="12,24,12,12"
                         FontSize="72" FontWeight="Bold"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                         Click="btnCapture_Click"/>
             </Grid>
         </Grid>
 
-        <Grid Grid.Column="1" Margin="12,0,12,0">
+        <Grid Grid.Column="1" Margin="0,12,12,24" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="370"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image x:Name="image" Grid.Row="0"/>
-
-            <ListView x:Name="lvImage" Grid.Row="1" Margin="0,0,0,22"
+            <Grid>
+                <Border Background="Black" CornerRadius="4"/>
+                <Image x:Name="image" Margin="6" Stretch="Uniform" VerticalAlignment="Top"/>
+            </Grid>
+            
+            <ListView x:Name="lvImage" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Top"
                       SelectionMode="Single" 
                       SelectionChanged="lvImage_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding CaptureDateTime}"
                                         Header="날짜"
-                                        Width="240"/>
+                                        Width="140"/>
                         <GridViewColumn DisplayMemberBinding="{Binding Accuracy}"
                                         Header="인식률"
                                         Width="100"/>

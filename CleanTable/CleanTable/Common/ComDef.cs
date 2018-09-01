@@ -8,7 +8,12 @@ namespace CleanTable.Common
 {
     public class ComDef
     {
+        public const string FILENAME_DATETIMEFORMAT = "yyyyMMdd_HHmmssfff";
+        public const string FILEEXTENSION = ".jpeg";
+
         public const string SAVEIMAGEDIR = "\\SaveImage";
         public const char SEPARATECHAT = ',';
+
+        public const string LOGFILENAME = @"Snapshot.csv";
     }
 }

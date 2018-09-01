@@ -1,15 +1,17 @@
 ﻿using CleanTable.Common;
 using CleanTable.Core;
 using CleanTable.Model;
-using Microsoft.Expression.Encoder.Devices;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -22,10 +24,8 @@ namespace CleanTable
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
-        CheckFood checkFood = new CheckFood();
-
-        public Collection<EncoderDevice> VideoDevices { get; set; }
-        //public Collection<EncoderDevice> AudioDevices { get; set; }
+        WebCam webcam;
+        DataManager dataManager = new DataManager();
 
         public MainWindow()
         {
@@ -35,110 +35,120 @@ namespace CleanTable
 
         private void Window_Loaded(object sender, EventArgs e)
         {
-            LoadData();
+            dataManager.LoadData();
 
             try
             {
-                #region 주석
-                //capture = VideoCapture.FromCamera(CaptureDevice.Any, 0);
-                //capture.FrameWidth = 640;
-                //capture.FrameHeight = 480;
-                //capture.Open(0);
-                //wb = new WriteableBitmap(capture.FrameWidth, capture.FrameHeight, 96, 96, PixelFormats.Bgr24, null);
-                //image.Source = wb;
-                #endregion
-
-                InitWebCam();
+                InitCam();
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("카메라 초기화에 실패하였습니다. 프로그램을 다시 실행해주세요.");
+                string msg = "카메라 초기화에 실패하였습니다. 프로그램을 다시 실행해주세요\n" + ex.Message;
+                MessageBox.Show(msg);
+
                 this.Close();
             }
         }
 
+        private void InitCam()
+        {
+            webcam = new WebCam();
+            webcam.Initialize(ref previewImageCtrl);
+            webcam.InitResolution(1024, 768);
+
+            webcam.Start();
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            webcam.Start();
+        }
+
         private async void Window_Closing(object sender, EventArgs e)
         {
-            //TODO: csv 저장
-            await SaveData();
+            webcam.Stop();
+            await dataManager.SaveData();
         }
 
-        private void LoadData()
+        private void btnCapture_Click(object sender, RoutedEventArgs e)
         {
-            if (System.IO.File.Exists("Snapshot.csv"))
-            {
-                StreamReader sr = new StreamReader("Snapshot.csv", Encoding.GetEncoding("UTF-8"));
-                while (!sr.EndOfStream)
-                {
-                    string data = sr.ReadLine();
-                    string[] dataArray = data.Split(ComDef.SEPARATECHAT);
-
-                    SnapShot snapShot = new SnapShot
-                    {
-                        Id = dataArray[0],
-                        CaptureDateTime = dataArray[1],
-                        Path = dataArray[2],
-                        Category = dataArray[3],
-                        IsEmpty = bool.Parse(dataArray[4]),
-                        Accuracy = int.Parse(dataArray[5]),
-                        Message = dataArray[6],
-                        LoadingTime = float.Parse(dataArray[7])
-                    };
-
-                    App.snapShotViewModel.Add(snapShot);
-                }
-            }
-            else return;
+            EnableRecog(true);
+            Capture();
         }
 
-        private async Task SaveData()
+        private async void Capture()
         {
-            await Task.Run(() =>
-            {
-            string filePath = ComUtil.GetProcessRootPath() + "\\Snapshot.csv";
-                try
-                {
-                    using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
-                    {
-                        using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8))
-                        {
-                            List<SnapShot> lstSnapShot = new List<SnapShot>(App.snapShotViewModel.Items);
+            SnapShot snapShot = new SnapShot();
 
-                            StringBuilder dat = new StringBuilder();
-                            foreach (SnapShot item in lstSnapShot)
-                            {
-                                dat.Append(item.Id + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.CaptureDateTime + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.Path + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.Category + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.IsEmpty + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.Accuracy + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.Message + ComDef.SEPARATECHAT.ToString());
-                                dat.Append(item.LoadingTime + Environment.NewLine);
+            string rootPath = dataManager.ValidPath();
+            string filename = DateTime.Now.ToString(ComDef.FILENAME_DATETIMEFORMAT);
+            string imageFullPath = Path.Combine(rootPath, filename) + ComDef.FILEEXTENSION;
 
-                            }
+            if (string.IsNullOrEmpty(imageFullPath))
+                return;
 
-                            string strData = dat.ToString();
-                            sw.Write(strData);
+#if true
+            ImageSource source = previewImageCtrl.Source;
+            webcam.SaveImageCapture((BitmapSource)source, imageFullPath);
 
-                            //string line = string.Join(",", App.snapShotViewModel.Items);
-                            sw.Close();
-                            fs.Close();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        MessageBox.Show(ex.Message);
-                    });
-                    
-                }
-            }); 
+            image.Source = new BitmapImage(new Uri(imageFullPath, UriKind.Absolute));
+#else
+            BitmapSource bitmapSource = webcam.SaveImageCapture(imageFullPath); 
+            image.Source = bitmapSource;
+#endif
+            snapShot = await CheckDish(imageFullPath);
+            snapShot.CaptureDateTime = DateTime.Now.ToString("G");
+            snapShot.Id = filename;
+            snapShot.Path = imageFullPath;
+            
+            App.snapShotViewModel.Add(snapShot);
+
+            EnableRecog(false);
 
             return;
         }
+
+        private async Task<SnapShot> CheckDish(string filename)
+        {
+            CheckFood checkFood = new CheckFood();
+            SnapShot snapShot = await checkFood.IsDishEmptyAsync(filename);
+
+            return snapShot;
+        }
+
+        private void EnableRecog(bool isRecog)
+        {
+            return; //only test
+            if(isRecog)
+            {
+                btnCapture.Content = "인식중...";
+                btnCapture.IsEnabled = false;
+            }
+            else
+            {
+                btnCapture.Content = "인식";
+                btnCapture.IsEnabled = true;
+            }
+        }
+
+        private void lvImage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            SnapShot snapShot = lvImage.SelectedItem as SnapShot;
+
+            if(snapShot != null)
+            {
+                try
+                {
+                    image.Source = new BitmapImage(new Uri(snapShot.Path));
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+#if false //NOTUSED
 
         private void InitWebCam()
         {
@@ -156,7 +166,6 @@ namespace CleanTable
 
             StartPreview();
         }
-
         private void StartPreview()
         {
             try
@@ -182,23 +191,6 @@ namespace CleanTable
             }
         }
 
-        private void btnCapture_Click(object sender, RoutedEventArgs e)
-        {
-            EnableRecog(true);
-            Capture();
-            //Capture(strResult);
-
-            //string filename = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".jpg";
-            
-            //frame = Capture();
-            //string filename = string.Empty;
-            //bool bSaved = SaveImage(frame, ref filename);
-            //if(bSaved)
-            //{
-            //    CheckDish(filename);
-            //}
-        }
-
         private async void Capture()
         {
             SnapShot snapShot = new SnapShot();
@@ -221,7 +213,7 @@ namespace CleanTable
 
             string filename = DateTime.Now.ToString("yyyyMMdd_HHmmssfff");
             string imagePath = savePath + "\\" + filename;
-            string strResult = WebcamViewer.TakeSnapshot(imagePath);
+            string strResult = string.Empty;//WebcamViewer.TakeSnapshot(imagePath);
 
             if (string.IsNullOrEmpty(strResult))
                 return;
@@ -239,35 +231,7 @@ namespace CleanTable
 
             return;
         }
+#endif
 
-        private async Task<SnapShot> CheckDish(string filename)
-        {
-            SnapShot snapShot = await checkFood.IsDishEmptyAsync(filename);
-            return snapShot;
-        }
-
-        private void EnableRecog(bool isRecog)
-        {
-            if(isRecog)
-            {
-                btnCapture.Content = "인식중...";
-                btnCapture.IsEnabled = false;
-            }
-            else
-            {
-                btnCapture.Content = "인식";
-                btnCapture.IsEnabled = true;
-            }
-        }
-
-        private void lvImage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            SnapShot snapShot = lvImage.SelectedItem as SnapShot;
-
-            if(snapShot != null)
-            {
-                image.Source = new BitmapImage(new Uri(snapShot.Path));
-            }
-        }
     }
 }
