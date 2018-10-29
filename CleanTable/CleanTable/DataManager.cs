@@ -35,6 +35,7 @@ namespace CleanTable
                     };
 
                     App.snapShotViewModel.Add(snapShot);
+                    App.snapShotViewModel.AddAlreadySaved(snapShot);
                 }
             }
             else
@@ -45,6 +46,7 @@ namespace CleanTable
 
         public async Task SaveData()
         {
+            App.snapShotViewModel.DeleteAlreadySaved();
             string filePath = Path.Combine(ComUtil.GetProcessRootPath(), ComDef.LOGFILENAME);
             await Task.Run(() =>
             {

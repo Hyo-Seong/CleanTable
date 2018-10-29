@@ -14,10 +14,12 @@ namespace CleanTable.ViewModel
     public class SnapShotViewModel
     {
         public ObservableCollection<SnapShot> Items { get; set; }
+        public ObservableCollection<SnapShot> AlreadySavedItems { get; set; }
 
         public SnapShotViewModel()
         {
             Items = new ObservableCollection<SnapShot>();
+            AlreadySavedItems = new ObservableCollection<SnapShot>();
             string directoryPath = SetImageResourcePath();
             //Adds(BindingImages(directoryPath));
         }
@@ -67,6 +69,19 @@ namespace CleanTable.ViewModel
         {
             Items.Remove(image);
         }
-        
+
+        public void AddAlreadySaved(SnapShot item)
+        {
+            AlreadySavedItems.Add(item);
+        }
+
+        public void DeleteAlreadySaved()
+        {
+            foreach(SnapShot item in AlreadySavedItems)
+            {
+                Delete(item);
+            }
+        }
+
     }
 }

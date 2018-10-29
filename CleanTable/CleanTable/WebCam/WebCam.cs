@@ -58,7 +58,7 @@ namespace CleanTable
                 capture.Set(CaptureProperty.FrameWidth, size.Width);
                 capture.Set(CaptureProperty.FrameHeight, size.Height);
 
-                capture.Open(1);
+                capture.Open(0);
 
                 while (isCameraRunning == 1)
                 {
